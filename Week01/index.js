@@ -1,34 +1,32 @@
-// this is a single-line javascript comment
-
-/* define a variable and place
-   into it the http package (shared code) from node.js */
-
+// Week 1 assignment 
+//Create a simnple http node.js 
+// Create different response depending on URL
 let myhttp = require('http');
-
-// use dot notation in javascript to access an object and its methods (commands) and properties
-// createServer() takes some arguments to make it provide a useful http server
-// 1: function (block of code) that will be run whenever the server receives an http request
-
+// Start server
 let myserver = myhttp.createServer(
-  function( myrequest, myresponse ) {
-    console.log( myrequest.url );
-
+  function (myrequest, myresponse) {
+    console.log(myrequest.url);
+    // Responces depending on URL
     let mytext;
-    if ( myrequest.url === "/hey" ) {
-      mytext = "Well hello there folks...";
+    if (myrequest.url === "/new_here") {
+      mytext = "Have we met before? Try going to /class";
     } else {
-      mytext = "I don't know you!";
+      mytext = "Have you tried adding /new_here at the end of the URL?";
     }
-    // writeHead() creates an http response header, including the status code (200 OK), the content type
-    myresponse.writeHead( 200, { "Content-Type": "text/plain" } );
+    if (myrequest.url === "/class") {
+      mytext = "Nice to meet you! Check out /secret";
+    }
+    if (myrequest.url === "/secret") {
+      mytext = "JavaScript is cool and rewarding when you figure things out!";
+    }
+    // writeHead() creates an http response header, http status code 200 OK + the content type
+    myresponse.writeHead(200, { "Content-Type": "text/plain" });
 
-    myresponse.end( mytext );
+    myresponse.end(mytext);
   }
 );
-
-// ask http to start listening on a tcp port for incoming http requests
-
-// listen() takes 2 args: 1: tcp port #, 2: string of the ip address to listen (0.0.0.0)
-myserver.listen(80, "0.0.0.0");
+// tcp listening port .listen takes 2 args: 1: tcp port #, 2: string of the ip address to listen (0.0.0.0) 
+// 127.0.0.1 = Local computer address 
+myserver.listen(8080, "127.0.0.1");
 
 console.log("server has started");
